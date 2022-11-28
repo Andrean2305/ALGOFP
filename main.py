@@ -154,6 +154,7 @@ count_bed,count_lemari,count_chair,count_table = randomnize(draw_max,count_bed,c
 i = 0
 
 def drawgame():
+    
     for z in range (0,size_X) :
         for h in range (0,size_Y):
             if map[z][h] == 8 :
@@ -200,10 +201,29 @@ color_light = (170,170,170)
 # dark shade of the button
 color_dark = (100,100,100)
 
+tools_clicked = "a"
 while running:
+    click_now = True
     button_width = 200
-    button_height = 400    
+    button_height = 400  
+    
+    # 1400-(15*35))/2 
+    # 200
+
+    #TOOLS
+    bed_button_w = 50
+    bed_button_y = 50  
+
+    chair_button_w = 100
+    chair_button_y = 100
+
     surface.fill(background)
+    pygame.draw.rect(surface, white, pygame.Rect(bed_button_w + 20,bed_button_y, 50, 50))
+
+    Mouse_x, Mouse_y = pygame.mouse.get_pos()
+    #TOOLS
+    # print(Mouse_x - (1400-(15*35))/2, Mouse_y - 200)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -212,9 +232,22 @@ while running:
             
             if button_width <= mouse[0] <= button_width+140 and button_height <= mouse[1] <= button_height+40:
                 randomnize(draw_max,count_bed,count_chair,count_table,count_lemari)
+            
+            if bed_button_w <= mouse[0] <= bed_button_w + 50 and bed_button_y <= mouse[1] <= bed_button_y + 50 and tools_clicked != "BED":
+                tools_clicked = "BED"
+                click_now = False
+            
+            if bed_button_w <= mouse[0] <= bed_button_w + 50 and bed_button_y <= mouse[1] <= bed_button_y + 50 and tools_clicked == "BED" and click_now:
+                tools_clicked = "a"
+            
+            if (1400-(15*35))/2  <= mouse[0] <= (1400-(15*35))/2 + 35*15 and 200 <= mouse[1] <= 200 + 35*15 and tools_clicked == "BED":
+                map[int((Mouse_y - 200)//35)][int((Mouse_x - (1400-(15*35))/2)//35)] = 3
+
+    if tools_clicked == "BED" :
+    
+        print("aa")
 
     mouse = pygame.mouse.get_pos()
-    surface.fill(background)
 
     if button_width <= mouse[0] <= button_width+140 and button_height <= mouse[1] <= button_height+40:  #hover
         pygame.draw.rect(surface,color_light,[button_width,button_height,140,40])
