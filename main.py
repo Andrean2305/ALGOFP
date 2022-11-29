@@ -153,6 +153,9 @@ count_bed,count_lemari,count_chair,count_table = randomnize(draw_max,count_bed,c
 
 i = 0
 
+x_block = (1400/2-(15*35)/2)
+y_block = 200
+tile_size = 35
 def drawgame():
     
     for z in range (0,size_X) :
@@ -160,32 +163,32 @@ def drawgame():
             if map[z][h] == 8 :
 
                 if z == 0 and h == 0 :
-                    surface.blit(wall_img[2], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[2], (x_block + h*tile_size , y_block  + z*tile_size ))
                 elif z == 0 and h == size_Y -1 :
-                    surface.blit(wall_img[6], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[6], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif z == size_X -1 and h == size_Y -1:
-                    surface.blit(wall_img[7], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[7], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif z == size_X -1 and h == 0:
-                    surface.blit(wall_img[1], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[1], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif z == 0 and 0 < h < size_Y - 1:
-                    surface.blit(wall_img[4], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[4], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif z == size_X - 1 and 0 < h < size_Y - 1:
-                    surface.blit(wall_img[3], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[3], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif 0 < z < size_X - 1 and h == 0:
-                    surface.blit(wall_img[0], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[0], (x_block + h*tile_size , y_block + z*tile_size ))
                 elif 0 < z < size_X - 1 and h == size_Y - 1:
-                    surface.blit(wall_img[5], ((1400/2-(15*35)/2) + h*35, 200 + z*35))
+                    surface.blit(wall_img[5], (x_block + h*tile_size , y_block + z*tile_size ))
 
             if map[z][h] == 1 :
-                pygame.draw.rect(surface, green, pygame.Rect((1400-(15*35))/2 + h*35, 200 + z*35, 35, 35))
+                pygame.draw.rect(surface, green, pygame.Rect(x_block + h*tile_size, y_block + z*tile_size,tile_size,tile_size))
             if map[z][h] == 2 :
-                pygame.draw.rect(surface, red, pygame.Rect((1400-(15*35))/2 + h*35, 200 + z*35, 35, 35))
+                pygame.draw.rect(surface, red, pygame.Rect(x_block + h*tile_size, y_block + z*tile_size,tile_size,tile_size))
             if map[z][h] == 3 :
-                pygame.draw.rect(surface, white, pygame.Rect((1400-(15*35))/2 + h*35, 200 + z*35, 35, 35))
+                pygame.draw.rect(surface, white, pygame.Rect(x_block + h*tile_size, y_block + z*tile_size,tile_size,tile_size))
             if map[z][h] == 4 :
-                pygame.draw.rect(surface, blue, pygame.Rect((1400-(15*35))/2 + h*35, 200 + z*35, 35, 35))
+                pygame.draw.rect(surface, blue, pygame.Rect(x_block + h*tile_size, y_block + z*tile_size,tile_size,tile_size))
             if map[z][h] == 5 :
-                pygame.draw.rect(surface, yellow, pygame.Rect((1400-(15*35))/2 + h*35, 200 + z*35, 35, 35))
+                pygame.draw.rect(surface, yellow, pygame.Rect(x_block + h*tile_size, y_block + z*tile_size, tile_size, tile_size))
 
 width = surface.get_width()
 height = surface.get_height()
@@ -215,7 +218,7 @@ while running:
     bed_button_y = 50  
 
     chair_button_w = 100
-    chair_button_y = 100
+    chair_button_y = 50
 
     surface.fill(background)
     pygame.draw.rect(surface, white, pygame.Rect(bed_button_w + 20,bed_button_y, 50, 50))
@@ -240,8 +243,8 @@ while running:
             if bed_button_w <= mouse[0] <= bed_button_w + 50 and bed_button_y <= mouse[1] <= bed_button_y + 50 and tools_clicked == "BED" and click_now:
                 tools_clicked = "a"
             
-            if (1400-(15*35))/2  <= mouse[0] <= (1400-(15*35))/2 + 35*15 and 200 <= mouse[1] <= 200 + 35*15 and tools_clicked == "BED":
-                map[int((Mouse_y - 200)//35)][int((Mouse_x - (1400-(15*35))/2)//35)] = 3
+            if x_block <= mouse[0] <= x_block + 35*15 and y_block <= mouse[1] <= y_block + tile_size*15 and tools_clicked == "BED":
+                map[int((Mouse_y - y_block)//35)][int((Mouse_x - x_block)//35)] = 3
 
     if tools_clicked == "BED" :
     
