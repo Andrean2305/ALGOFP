@@ -34,7 +34,7 @@ class Room :
     def make_map(self, size_of_map_y,size_of_map_x):
         map_now = []
         map_now = [[0 for i in range(size_of_map_x)] for j in range(size_of_map_y)]
-        
+
         for z in range (size_of_map_x) :
             for h in range (size_of_map_y):
                 if (z == 0 or z == size_of_map_x -1 or h == 0 or h == size_of_map_y - 1):
