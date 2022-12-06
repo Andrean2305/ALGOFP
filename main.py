@@ -10,17 +10,7 @@ from color import *
 #Compare greedy dan __ : if you use a greedy algorithm, the results of searching for tile locations can collide with other tiles
 #//downloaded from flashjunior.ch//
 
-i = 0
-pygame.init()
-
-width = 1400
-height = 900
-surface = pygame.display.set_mode((width,height))
-
-running = True
-
-size_Y = 15
-size_X = 15
+#COLOR####################################################################
 
 red = (255,0,0)
 blue = (240,248,255)
@@ -41,11 +31,33 @@ pastel_dark_cream = (245, 235, 224)
 pastel_pink = (240, 219, 219)
 pastel_dark_pink = (219, 163, 154)
 
+######################COLOR#############################################
+i = 0
+pygame.init()
+
+width = 1400
+height = 900
+surface = pygame.display.set_mode((width,height))
+
+running = True
+
+size_Y = 25
+size_X = 27
+
 total_tiles_x_and_y = 525
-tile_size = total_tiles_x_and_y//size_X
+
+if size_X > size_Y :
+    tile_size = total_tiles_x_and_y//size_X
+else:
+    tile_size = total_tiles_x_and_y//size_Y
+
 tool_size = width/20 
 
+x_block = (width/2-(size_Y*tile_size)/2)
+y_block = height/4.5
+
 wall_img = [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
 wall_img[0] = pygame.image.load('Dinding\L.png')
 wall_img[1] = pygame.image.load('Dinding\LD.png')
 wall_img[2] = pygame.image.load('Dinding\LU.png')
@@ -71,6 +83,11 @@ choose = pygame.image.load('Tools_Asset\CHOOSE.png')
 choose = pygame.transform.scale(choose, (tool_size,tool_size))
 
 
+random_box = pygame.image.load('Tools_Asset\RANDOM_NOTIF.png')
+random_now = False
+
+for i in range (0,14):
+    wall_img[i] = pygame.transform.scale(wall_img[i], (tile_size,tile_size))
 # while i < 1 :
 #         try:
 #             print("1 tile = 50cm")
@@ -116,15 +133,15 @@ count_lemari = 0
 
 draw_max = 0
 
-def clear_map():
-        for z in range (size_X) :
-            for h in range (size_Y):
-                if (map[z][h] != 8 
-                and map[z][h] != 1) :
-                    map[z][h] = 0
-                
-                if(map[z][h] == 1):
-                    map[z][h] = 8
+def clear_map(size_X,size_Y):
+    for z in range (size_X) :
+        for h in range (size_Y):
+            if (map[z][h] != 8 
+            and map[z][h] != 1) :
+                map[z][h] = 0
+            
+            if(map[z][h] == 1):
+                map[z][h] = 8
 
 def give_beds():
     if(room_1.check_space(room_1.size_Y,room_1.size_X,kasur.min_x,kasur.min_y)):
@@ -150,9 +167,9 @@ def give_lemari():
         lemari.random_length((room_1.size_X//2),(room_1.size_Y//2))
         return True
 
-def randomnize(draw_max,count_bed,count_chair,count_table,count_lemari):
-    clear_map()
-    room_1.maps = room_1.give_random_door(room_1.size_X,room_1.size_Y,room_1.maps)
+def randomnize(draw_max,count_bed,count_chair,count_table,count_lemari,size_X,size_Y):
+    clear_map(size_X,size_Y)
+    room_1.maps = room_1.give_random_door(size_X,size_Y,room_1.maps)
 
     random_chair = random.randint(1,3)
     random_table = random.randint(1,2)
@@ -183,17 +200,12 @@ def randomnize(draw_max,count_bed,count_chair,count_table,count_lemari):
     count_lemari = 0
 
     draw_max = 0
+    
     return count_bed,count_lemari,count_chair,count_table
 
-count_bed,count_lemari,count_chair,count_table = randomnize(draw_max,count_bed,count_chair,count_table,count_lemari)
+count_bed,count_lemari,count_chair,count_table = randomnize(draw_max,count_bed,count_chair,count_table,count_lemari,size_X,size_Y)
 
 i = 0
-
-selisih_x_y = size_X - size_Y
-
-x_block = (width/2-(size_X*tile_size)/2)
-y_block = height/4.5
-
 tool_map = [
     [1,2],
     [3,4],
@@ -288,7 +300,11 @@ def draw_tools():
             if selected_tool[i][j] == 1 :
                 choosen_w = tool_size/2.4 + j*tool_size
                 choosen_y = 180 + i*tool_size
-                surface.blit(choose, (choosen_w , choosen_y))
+
+                overlays = pygame.Surface((tool_size,tool_size))                  
+                overlays.set_alpha(150)                
+                overlays.fill((0,0,0))              
+                surface.blit(overlays, (choosen_w , choosen_y))  
             ##DOWN FOR LINE/BOX
             
             pygame.draw.rect(surface, black, pygame.Rect(tool_size/2.4 + j*tool_size, 180 + tool_size*i,tool_size,tool_size),2) # TOOLS SIDE
@@ -348,7 +364,13 @@ def drawgame():
             elif map[z][h] == 1 and z == size_X-1:
                 surface.blit(wall_img[13], (x_block + h*tile_size , y_block + z*tile_size ))
 
-    surface.blit(clock, (x_block + clock_now*tile_size , y_block))
+    if ((Mouse_y - y_block)//tile_size) > 0 and (Mouse_y - y_block)//tile_size < size_X - 1 and ((Mouse_x - x_block)//tile_size > 0) and ((Mouse_x - x_block)//tile_size < size_Y - 1):
+        overlays = pygame.Surface((tile_size,tile_size))                  
+        overlays.set_alpha(50)                
+        overlays.fill((0,0,0))              
+        surface.blit(overlays, (x_block + (Mouse_x - x_block)//tile_size*tile_size,y_block + (Mouse_y-y_block)//tile_size*tile_size))  
+
+    surface.blit(clock, (x_block + clock_now*tile_size , y_block + 3))
 width = surface.get_width()
 height = surface.get_height()
 
@@ -368,6 +390,18 @@ button_height = height/9
 smallfont = pygame.font.Font('Text\pixelFJ8pt1__.TTF',int(randomnizer_width/8.5))
 text = smallfont.render('Randomnizer' , True , black)
 
+t_block = x_block
+random_close_x,random_close_y,random_close_length,random_close_height = 437.5 + 60, y_block - 110, 63,55
+random_plusW_x,random_plusW_y,random_plusW_length,random_plusW_height = 437.5 + 140,y_block - 15,32,32
+random_minW_x,random_minW_y,random_minW_length,random_minW_height = 437.5 + 140,y_block + 20,32,32
+random_plusL_x,random_plusL_y,random_plusL_length,random_plusL_height = 437.5 + 270,y_block - 15,32,32
+random_minL_x,random_minL_y,random_minL_length,random_minL_height = 437.5 + 270,y_block + 20,32,32
+random_confirm_x,random_confirm_y,random_confirm_length,random_confirm_height = 437.5 + 185,y_block + 75,135,40
+
+print(x_block)
+take_width = 20
+take_length = 20
+
 while running:
     click_now = True
     
@@ -386,11 +420,70 @@ while running:
         
         if event.type == pygame.MOUSEBUTTONDOWN:
             #Random_tool
-            if button_width <= mouse[0] <= button_width + randomnizer_width and button_height <= mouse[1] <= button_height + randomnizer_height:
-                randomnize(draw_max,count_bed,count_chair,count_table,count_lemari)
-                clock_now = find_clock()
-            #Bed_Tools
+            if button_width <= mouse[0] <= button_width + randomnizer_width and button_height <= mouse[1] <= button_height + randomnizer_height and random_now == False:
+                random_now = True
 
+            if random_now:
+                if random_close_x <= mouse[0] <= random_close_x + random_close_length and random_close_y <= mouse[1] <= random_close_y + random_close_height:
+                    random_now = False
+                if random_plusW_x <= mouse[0] <= random_plusW_x + random_plusW_length and random_plusW_y <= mouse[1] <= random_plusW_y + random_plusW_height:
+                    take_width += 1
+                if random_minW_x <= mouse[0] <= random_minW_x + random_minW_length and random_minW_y <= mouse[1] <= random_minW_y + random_minW_height and take_width - 1 > 14:
+                    take_width -= 1
+                if random_plusL_x <= mouse[0] <= random_plusL_x + random_plusL_length and random_plusL_y <= mouse[1] <= random_plusL_y + random_plusL_height:
+                    take_length += 1
+                if random_minL_x <= mouse[0] <= random_minL_x + random_minL_length and random_minL_y <= mouse[1] <= random_minL_y + random_minL_height and take_length - 1 > 14 :
+                    take_length -= 1
+                if random_confirm_x <= mouse[0] <= random_confirm_x + random_confirm_length and random_confirm_y <= mouse[1] <= random_confirm_y + random_confirm_height:
+                    size_X = take_width
+                    size_Y = take_length
+
+                    room_1.size_X = take_width
+                    room_1.size_Y = take_length
+
+                    room_1.maps = room_1.make_map(room_1.size_X,room_1.size_Y)
+                    map = room_1.maps
+                    if size_X > size_Y :
+                        tile_size = total_tiles_x_and_y//size_X
+                    else:
+                        tile_size = total_tiles_x_and_y//size_Y
+
+                    x_block = (width/2-(size_Y*tile_size)/2)
+
+                    wall_img[0] = pygame.image.load('Dinding\L.png')
+                    wall_img[1] = pygame.image.load('Dinding\LD.png')
+                    wall_img[2] = pygame.image.load('Dinding\LU.png')
+                    wall_img[3] = pygame.image.load('Dinding\MD.png')
+                    wall_img[4] = pygame.image.load('Dinding\MU.png')
+                    wall_img[5] = pygame.image.load('Dinding\R.png')
+                    wall_img[6] = pygame.image.load('Dinding\RU.png')
+                    wall_img[7] = pygame.image.load('Dinding\RD.png')
+                    wall_img[8] = pygame.image.load('Dinding\FLOOR.png')
+                    wall_img[9] = pygame.image.load('Dinding\DOOR_UP_1.png')
+                    wall_img[10] = pygame.image.load('Dinding\DOOR_UP_2.png')
+                    wall_img[11] = pygame.image.load('Dinding\DOOR_L.png')
+                    wall_img[12] = pygame.image.load('Dinding\DOOR_R.png')
+                    wall_img[13] = pygame.image.load('Dinding\DOOR_D.png')
+
+                    clock = pygame.image.load('Dinding\CLOCK.png')
+                    clock = pygame.transform.scale(clock, (tile_size,tile_size))
+
+                    tool_box = pygame.image.load('Tools_Asset\Tools_box.png')
+                    logo = pygame.image.load('Tools_Asset\LOGO.png')
+
+                    choose = pygame.image.load('Tools_Asset\CHOOSE.png')
+                    choose = pygame.transform.scale(choose, (tool_size,tool_size))
+
+
+                    random_box = pygame.image.load('Tools_Asset\RANDOM_NOTIF.png')
+                    
+                    for i in range (0,14):
+                        wall_img[i] = pygame.transform.scale(wall_img[i], (tile_size,tile_size))
+                    randomnize(draw_max,count_bed,count_chair,count_table,count_lemari,size_X,size_Y)
+                    random_now = False
+                    clock_now = find_clock()
+
+            #Bed_Tools
             if bed_button_w <= mouse[0] <= bed_button_w + tool_size and bed_button_y <= mouse[1] <= bed_button_y + tool_size and tools_clicked != "BED":
                 clear_select()
                 selected_tool[0][0] = 1
@@ -433,35 +526,21 @@ while running:
             if lemari_button_w <= mouse[0] <= lemari_button_w + tool_size and lemari_button_y <= mouse[1] <= lemari_button_y + tool_size and tools_clicked == "LEMARI" and click_now:
                 tools_clicked = "a"
                 clear_select()
+
             #drawing tools to the map
+            if random_now == False:
+                if ((Mouse_y - y_block)//tile_size) > 0 and (Mouse_y - y_block)//tile_size < size_X - 1 and ((Mouse_x - x_block)//tile_size > 0) and ((Mouse_x - x_block)//tile_size < size_Y - 1):
 
-            if ((Mouse_y - y_block)//35) > 0 and (Mouse_y - y_block)//35 < size_X - 1 and ((Mouse_x - x_block)//35 > 0) and ((Mouse_x - x_block)//35 < size_Y - 1):
-
-                if x_block <= mouse[0] <= x_block + 35*15 and y_block <= mouse[1] <= y_block + tile_size*15 and tools_clicked == "BED":
-                    map[int((Mouse_y - y_block)//35)][int((Mouse_x - x_block)//35)] = 3
-                elif x_block <= mouse[0] <= x_block + 35*15 and y_block <= mouse[1] <= y_block + tile_size*15 and tools_clicked == "CHAIR":
-                    map[int((Mouse_y - y_block)//35)][int((Mouse_x - x_block)//35)] = 2
-                elif x_block <= mouse[0] <= x_block + 35*15 and y_block <= mouse[1] <= y_block + tile_size*15 and tools_clicked == "DESK":      #
-                    map[int((Mouse_y - y_block)//35)][int((Mouse_x - x_block)//35)] = 4                                                      #
-                elif x_block <= mouse[0] <= x_block + 35*15 and y_block <= mouse[1] <= y_block + tile_size*15 and tools_clicked == "LEMARI":    #
-                    map[int((Mouse_y - y_block)//35)][int((Mouse_x - x_block)//35)] = 5                                                      #
+                    if x_block <= mouse[0] <= x_block + tile_size*size_Y and y_block <= mouse[1] <= y_block + tile_size*size_X and tools_clicked == "BED":
+                        map[int((Mouse_y - y_block)//tile_size)][int((Mouse_x - x_block)//tile_size)] = 3
+                    elif x_block <= mouse[0] <= x_block + tile_size*size_Y and y_block <= mouse[1] <= y_block + tile_size*size_X and tools_clicked == "CHAIR":
+                        map[int((Mouse_y - y_block)//tile_size)][int((Mouse_x - x_block)//tile_size)] = 2
+                    elif x_block <= mouse[0] <= x_block + tile_size*size_Y and y_block <= mouse[1] <= y_block + tile_size*size_X and tools_clicked == "DESK":      #
+                        map[int((Mouse_y - y_block)//tile_size)][int((Mouse_x - x_block)//tile_size)] = 4                                                      #
+                    elif x_block <= mouse[0] <= x_block + tile_size*size_Y and y_block <= mouse[1] <= y_block + tile_size*size_X and tools_clicked == "LEMARI":    #
+                        map[int((Mouse_y - y_block)//tile_size)][int((Mouse_x - x_block)//tile_size)] = 5                                                      #
             ##############################################################################################################################
 
-    if tools_clicked == "BED" :
-    
-        print("BED")
-
-    if tools_clicked == "CHAIR" :
-    
-        print("aKURSI")
-    
-    if tools_clicked == "DESK" :
-    
-        print("aTABLEa")
-    
-    if tools_clicked == "LEMARI" :
-    
-        print("aLEMARIa")
     mouse = pygame.mouse.get_pos()
 
     if button_width <= mouse[0] <= button_width + randomnizer_width and button_height <= mouse[1] <= button_height + randomnizer_height:  #hover
@@ -477,8 +556,22 @@ while running:
     # updates the frames of the game
     drawgame()
 
+    if random_now :
+        overlay = pygame.Surface((width - 200,height))  
+        overlay.set_alpha(128)                
+        overlay.fill((0,0,0))           
+        surface.blit(overlay, (200,0))   
+
+        surface.blit(random_box, (437.5 + 13  , y_block - 120 ))
+
+        smallfont1 = pygame.font.Font('Text\pixelFJ8pt1__.TTF',int(randomnizer_width/4.5))
+        text_width = smallfont1.render(str(take_width) , True , white)    
+        text_length = smallfont1.render(str(take_length) , True , white)   
+
+        surface.blit(text_width , (437.5 + 58 , y_block ))
+        surface.blit(text_length , (437.5 + 188  , y_block))
     pygame.display.flip()
-   
+
 
 pygame.quit()
 
