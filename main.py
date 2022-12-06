@@ -35,8 +35,10 @@ pastel_dark_pink = (219, 163, 154)
 i = 0
 pygame.init()
 
-width = 1400
-height = 900
+ayola = 2 
+width = 1400//ayola
+height = 900//ayola
+
 surface = pygame.display.set_mode((width,height))
 
 running = True
@@ -44,14 +46,14 @@ running = True
 size_Y = 25
 size_X = 27
 
-total_tiles_x_and_y = 525
+total_tiles_x_and_y = 525/ayola
 
 if size_X > size_Y :
     tile_size = total_tiles_x_and_y//size_X
 else:
     tile_size = total_tiles_x_and_y//size_Y
 
-tool_size = width/20 
+tool_size = width//20 
 
 x_block = (width/2-(size_Y*tile_size)/2)
 y_block = height/4.5
@@ -77,13 +79,17 @@ clock = pygame.image.load('Dinding\CLOCK.png')
 clock = pygame.transform.scale(clock, (tile_size,tile_size))
 
 tool_box = pygame.image.load('Tools_Asset\Tools_box.png')
-logo = pygame.image.load('Tools_Asset\LOGO.png')
+tool_box = pygame.transform.scale(tool_box, (width//7,height//6))
 
+logo = pygame.image.load('Tools_Asset\LOGO.png')
+logo = pygame.transform.scale(logo, (width//7,height//3))
+#500 250
 choose = pygame.image.load('Tools_Asset\CHOOSE.png')
 choose = pygame.transform.scale(choose, (tool_size,tool_size))
 
 
 random_box = pygame.image.load('Tools_Asset\RANDOM_NOTIF.png')
+random_box = pygame.transform.scale(random_box, (width//2.8,height//(900/250)))
 random_now = False
 
 for i in range (0,14):
@@ -244,62 +250,62 @@ lemari_button_y = 100
 def draw_tools():
     pygame.draw.rect(surface, pastel_red, pygame.Rect(0,0, width/7, height)) # TOOLS SIDE
     surface.blit(tool_box, (0 , 0))
-    surface.blit(logo, (0 , 600))
+    surface.blit(logo, (0 , height/1.5))
 
     for i in range (len(tool_map)):
         for j in range (2):
             if tool_map[i][j] == 1 :
-                bed_button_w = tool_size/2.4 + j*tool_size
-                bed_button_y = 180 + i*tool_size
+                bed_button_w = tool_size//2.4 + j*tool_size
+                bed_button_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_purple, pygame.Rect(bed_button_w ,bed_button_y, tool_size, tool_size))
             elif tool_map[i][j] == 2 :
-                chair_button_w = tool_size/2.4 + j*tool_size
-                chair_button_y = 180 + i*tool_size
+                chair_button_w = tool_size//2.4 + j*tool_size
+                chair_button_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_green, pygame.Rect(chair_button_w ,chair_button_y, tool_size, tool_size))
             elif tool_map[i][j] == 3 :
-                desk_button_w = tool_size/2.4 + j*tool_size
-                desk_button_y = 180 + i*tool_size
+                desk_button_w = tool_size//2.4 + j*tool_size
+                desk_button_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blue, pygame.Rect(desk_button_w ,desk_button_y, tool_size, tool_size)) 
             elif tool_map[i][j] == 4 :
-                lemari_button_w = tool_size/2.4 + j*tool_size
-                lemari_button_y = 180 + i*tool_size
+                lemari_button_w = tool_size//2.4 + j*tool_size
+                lemari_button_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blues, pygame.Rect(lemari_button_w ,lemari_button_y, tool_size, tool_size))
             elif tool_map[i][j] == 5 :
-                object5_w = tool_size/2.4 + j*tool_size
-                object5_y = 180 + i*tool_size
+                object5_w = tool_size//2.4 + j*tool_size
+                object5_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_purple, pygame.Rect(object5_w ,object5_y, tool_size, tool_size))
             elif tool_map[i][j] == 6 :
-                object6_w = tool_size/2.4 + j*tool_size
-                object6_y = 180 + i*tool_size
+                object6_w = tool_size//2.4 + j*tool_size
+                object6_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_green, pygame.Rect(object6_w ,object6_y, tool_size, tool_size))
             elif tool_map[i][j] == 7 :
-                object7_w = tool_size/2.4 + j*tool_size
-                object7_y = 180 + i*tool_size
+                object7_w = tool_size//2.4 + j*tool_size
+                object7_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blue, pygame.Rect(object7_w ,object7_y, tool_size, tool_size)) 
             elif tool_map[i][j] == 8 :
-                object8_w = tool_size/2.4 + j*tool_size
-                object8_y = 180 + i*tool_size
+                object8_w = tool_size//2.4 + j*tool_size
+                object8_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blues, pygame.Rect(object8_w ,object8_y, tool_size, tool_size))
             elif tool_map[i][j] == 9 :
-                object9_w = tool_size/2.4 + j*tool_size
-                object9_y = 180 + i*tool_size
+                object9_w = tool_size//2.4 + j*tool_size
+                object9_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_purple, pygame.Rect(object9_w ,object9_y, tool_size, tool_size))
             elif tool_map[i][j] == 10 :
-                object10_w = tool_size/2.4 + j*tool_size
-                object10_y = 180 + i*tool_size
+                object10_w = tool_size//2.4 + j*tool_size
+                object10_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_green, pygame.Rect(object10_w ,object10_y, tool_size, tool_size))
             elif tool_map[i][j] == 11 :
-                object11_w = tool_size/2.4 + j*tool_size
-                object11_y = 180 + i*tool_size
+                object11_w = tool_size//2.4 + j*tool_size
+                object11_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blue, pygame.Rect(object11_w ,object11_y, tool_size, tool_size)) 
             elif tool_map[i][j] == 12 :
-                object12_w = tool_size/2.4 + j*tool_size
-                object12_y = 180 + i*tool_size
+                object12_w = tool_size//2.4 + j*tool_size
+                object12_y = height/5 + i*tool_size
                 pygame.draw.rect(surface, pastel_blues, pygame.Rect(object12_w ,object12_y, tool_size, tool_size))
 
             if selected_tool[i][j] == 1 :
-                choosen_w = tool_size/2.4 + j*tool_size
-                choosen_y = 180 + i*tool_size
+                choosen_w = tool_size//2.4 + j*tool_size
+                choosen_y = height/5 + i*tool_size
 
                 overlays = pygame.Surface((tool_size,tool_size))                  
                 overlays.set_alpha(150)                
@@ -307,8 +313,8 @@ def draw_tools():
                 surface.blit(overlays, (choosen_w , choosen_y))  
             ##DOWN FOR LINE/BOX
             
-            pygame.draw.rect(surface, black, pygame.Rect(tool_size/2.4 + j*tool_size, 180 + tool_size*i,tool_size,tool_size),2) # TOOLS SIDE
-    pygame.draw.rect(surface, black, pygame.Rect(tool_size/2.4,180,len(tool_map[0]) * tool_size,len(tool_map)* tool_size),4) # TOOLS SIDE
+            pygame.draw.rect(surface, black, pygame.Rect(tool_size/2.4 + j*tool_size, height/5 + tool_size*i,tool_size,tool_size),2) # TOOLS SIDE
+    pygame.draw.rect(surface, black, pygame.Rect(tool_size/2.4,height/5,len(tool_map[0]) * tool_size,len(tool_map)* tool_size),4) # TOOLS SIDE
 
     return bed_button_w,bed_button_y,chair_button_w,chair_button_y,desk_button_w,desk_button_y,lemari_button_w,lemari_button_y
 
@@ -391,22 +397,29 @@ smallfont = pygame.font.Font('Text\pixelFJ8pt1__.TTF',int(randomnizer_width/8.5)
 text = smallfont.render('Randomnizer' , True , black)
 
 t_block = x_block
-random_close_x,random_close_y,random_close_length,random_close_height = 437.5 + 60, y_block - 110, 63,55
-random_plusW_x,random_plusW_y,random_plusW_length,random_plusW_height = 437.5 + 140,y_block - 15,32,32
-random_minW_x,random_minW_y,random_minW_length,random_minW_height = 437.5 + 140,y_block + 20,32,32
-random_plusL_x,random_plusL_y,random_plusL_length,random_plusL_height = 437.5 + 270,y_block - 15,32,32
-random_minL_x,random_minL_y,random_minL_length,random_minL_height = 437.5 + 270,y_block + 20,32,32
-random_confirm_x,random_confirm_y,random_confirm_length,random_confirm_height = 437.5 + 185,y_block + 75,135,40
+# random_close_x,random_close_y,random_close_length,random_close_height = x_block + 60/1400 * width, y_block - 110/900*height, 63/1400 * width,55/900*height
+# random_plusW_x,random_plusW_y,random_plusW_length,random_plusW_height = x_block + 140/1400 * width,y_block - 15/900*height,32/1400 * width,32/900*height
+# random_minW_x,random_minW_y,random_minW_length,random_minW_height = x_block + 140/1400 * width,y_block + 20/900*height,32/1400 * width,32/900*height
+# random_plusL_x,random_plusL_y,random_plusL_length,random_plusL_height = x_block + 270/1400 * width,y_block - 15/900*height,32/1400 * width,32/900*height
+# random_minL_x,random_minL_y,random_minL_length,random_minL_height = x_block + 270/1400 * width,y_block + 20/900*height,32/1400 * width,32/900*height
+# random_confirm_x,random_confirm_y,random_confirm_length,random_confirm_height = x_block + 163/1400 * width,y_block + 75/900*height,135/1400 * width,40/900*height
+
+random_close_x,random_close_y,random_close_length,random_close_height = 437.5/ayola + 60/ayola, y_block - 110/ayola, 63/ayola,55/ayola
+random_plusW_x,random_plusW_y,random_plusW_length,random_plusW_height = 437.5/ayola + 140/ayola,y_block - 15/ayola,32/ayola,32/ayola
+random_minW_x,random_minW_y,random_minW_length,random_minW_height = 437.5/ayola + 140/ayola,y_block + 20/ayola,32/ayola,32/ayola
+random_plusL_x,random_plusL_y,random_plusL_length,random_plusL_height = 437.5/ayola + 270/ayola,y_block - 15/ayola,32/ayola,32/ayola
+random_minL_x,random_minL_y,random_minL_length,random_minL_height = 437.5/ayola + 270/ayola,y_block + 20/ayola,32/ayola,32/ayola
+random_confirm_x,random_confirm_y,random_confirm_length,random_confirm_height = 437.5/ayola + 185/ayola,y_block + 75/ayola,133/ayola,40/ayola
 
 print(x_block)
 take_width = 20
 take_length = 20
 
 while running:
+    x_block = (width/2-(size_Y*tile_size)/2)
     click_now = True
     
     #TOOLS
-
     surface.fill(pastel_yellow)
 
     bed_button_w,bed_button_y,chair_button_w,chair_button_y,desk_button_w,desk_button_y,lemari_button_w,lemari_button_y = draw_tools()
@@ -471,11 +484,15 @@ while running:
                     tool_box = pygame.image.load('Tools_Asset\Tools_box.png')
                     logo = pygame.image.load('Tools_Asset\LOGO.png')
 
+                    tool_box = pygame.transform.scale(tool_box, (width//7,height//6))
+                    logo = pygame.transform.scale(logo, (width//7,height//3))
+
                     choose = pygame.image.load('Tools_Asset\CHOOSE.png')
                     choose = pygame.transform.scale(choose, (tool_size,tool_size))
 
 
                     random_box = pygame.image.load('Tools_Asset\RANDOM_NOTIF.png')
+                    random_box = pygame.transform.scale(random_box, (width//2.8,height//(900/250)))
                     
                     for i in range (0,14):
                         wall_img[i] = pygame.transform.scale(wall_img[i], (tile_size,tile_size))
@@ -555,21 +572,21 @@ while running:
       
     # updates the frames of the game
     drawgame()
-
+    #1400 1200   1200/1400 * width
     if random_now :
-        overlay = pygame.Surface((width - 200,height))  
+        overlay = pygame.Surface((1200/1400 * width,height))  
         overlay.set_alpha(128)                
         overlay.fill((0,0,0))           
-        surface.blit(overlay, (200,0))   
+        surface.blit(overlay, (200/1400 * width,0))   
 
-        surface.blit(random_box, (437.5 + 13  , y_block - 120 ))
+        surface.blit(random_box, (437.5/ayola + 13/1400*width  , y_block - 120/900*height ))
 
         smallfont1 = pygame.font.Font('Text\pixelFJ8pt1__.TTF',int(randomnizer_width/4.5))
         text_width = smallfont1.render(str(take_width) , True , white)    
         text_length = smallfont1.render(str(take_length) , True , white)   
 
-        surface.blit(text_width , (437.5 + 58 , y_block ))
-        surface.blit(text_length , (437.5 + 188  , y_block))
+        surface.blit(text_width , (437.5/ayola + 58/1400 * width , y_block - 12/900*height))
+        surface.blit(text_length , (437.5/ayola + 188/1400 * width  , y_block - 12/900*height))
     pygame.display.flip()
 
 
