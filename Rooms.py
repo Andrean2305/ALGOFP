@@ -88,10 +88,24 @@ class Room :
 
         babi = True
         ea = 1
+        yes = [1,self.size_X-2]
         while (babi):
-
-            print("MENGOCOK TEMPAT",ea)
             j,i = random.randint(1,self.size_X - 2),random.randint(1,self.size_Y - 2)
+            print("MENGOCOK TEMPAT",ea)
+            if kode == 3 or kode == 5:
+                j,i = random.choice(yes),random.randint(1,self.size_Y - 2)
+                
+                if j == self.size_X - 2:
+                    if kode == 3:
+                        self.beds.pojok = True
+                    elif kode == 5:
+                        self.lemari.pojok = True
+                else:
+                    if kode == 3:
+                        self.beds.pojok = False
+                    elif kode == 5:
+                        self.lemari.pojok = False
+
             anjing = True
             
             # if self.maps[j][i] == 0 and self.maps[j + 1][i] != 1 and self.maps[j-1][i] != 1 and self.maps[j][i+1] != 1 and self.maps[j][i-1] != 1:

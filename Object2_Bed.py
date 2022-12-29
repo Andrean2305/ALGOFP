@@ -1,4 +1,5 @@
 import random
+import pygame
 
 class bed :
     _length_x = 0
@@ -9,9 +10,10 @@ class bed :
     max_y = 8
 
     min_x = 3
-    min_y = 2
+    min_y = 5
 
     def random_length(self,batas_x,batas_y):
+
         self._length_x = random.randint(self.min_x, batas_y)
         self._length_y = random.randint(self.min_y, batas_x)
 
