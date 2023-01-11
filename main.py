@@ -6,6 +6,7 @@ import pygame
 import random
 import sys
 from color import *
+import tracemalloc
 
 #Compare greedy dan __ : if you use a greedy algorithm, the results of searching for tile locations can collide with other tiles
 #//downloaded from flashjunior.ch//
@@ -431,7 +432,6 @@ def drawgame():
                             la-=1
                             break
                         
-                    print(la)
                     if z >= (size_X -2)/2 and z - la >= (size_X-1)/2:
                         surface.blit(pygame.transform.flip(bed_img[1],False,True), (x_block + h*tile_size , y_block + z*tile_size ))
                     else:

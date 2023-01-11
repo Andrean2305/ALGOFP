@@ -1,8 +1,10 @@
 import random
+import tracemalloc
 import Object1_chair_sofa
 import Object2_Bed
 import Object3_desk
 import Object4_lemari
+import time
 
 class Room :
     size_X = 0
@@ -11,10 +13,14 @@ class Room :
     beds = Object2_Bed.bed()
     table = Object3_desk.table()
     lemari = Object4_lemari.lemari()
+    dynamic_memory_j = []
+    dynamic_memory_i = []
 
     maps = []
 
     def __init__(self, size_x = 5, size_y = 5):
+        self.dynamic_memory_i = []
+        self.dynamic_memory_j = []
         self.size_X = size_x
         self.size_Y = size_y
         self.sofas.random_length((size_x//2),(size_y//2)) 
@@ -85,12 +91,20 @@ class Room :
         return map_now
 
     def give_furniture(self,panjang,lebar,kode):
-
         babi = True
         ea = 1
         yes = [1,self.size_X-2]
+
+        start = time.time()
+        tracemalloc.start()
         while (babi):
-            j,i = random.randint(1,self.size_X - 2),random.randint(1,self.size_Y - 2)
+            i = random.randint(1,self.size_Y - 2)
+            j = random.randint(1,self.size_X - 2)
+            # while j in self.dynamic_memory_j:
+            #     j = random.randint(1,self.size_X - 2)
+
+            # while i in self.dynamic_memory_i:
+            #     i = random.randint(1,self.size_Y - 2)
             print("MENGOCOK TEMPAT",ea)
             if kode == 3 or kode == 5:
                 j,i = random.choice(yes),random.randint(1,self.size_Y - 2)
@@ -171,6 +185,9 @@ class Room :
                                                 self.maps[j + a*atas_bawah][i + z*kiri_kanan] = kode
                                                 # print()
                                                 # print ("After=",self.maps[j+a*atas_bawah][i+z*kiri_kanan])
+                                    # self.dynamic_memory_j.append(j)
+                                    # self.dynamic_memory_i.append(i)
+                                    print(self.dynamic_memory_j,self.dynamic_memory_i)
                                     anjing = False
                         else :
                             test_kanan = False
@@ -214,6 +231,11 @@ class Room :
                         anjing = False
                                     
         self.print_map(self.maps)
+        end = time.time()
+
+        print("Memory traced after randomizer: ",tracemalloc.get_traced_memory())
+        print("\nAt the end of the calculation")
+        print("Time elapsed during the calculation:", end - start) 
     
     def check_space(self,map_x,map_y,min_x,min_y):
         checking = 0
