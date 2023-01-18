@@ -5,6 +5,7 @@ class bed :
     _length_x = 0
     _length_y = 0
     code = 3
+    pojok = False
 
     max_x = 9
     max_y = 8

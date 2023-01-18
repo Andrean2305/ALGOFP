@@ -206,6 +206,11 @@ def randomnize(draw_max,count_bed,count_chair,count_table,count_lemari,size_X,si
             if give_beds():
                 count_bed += 1
 
+        if count_lemari < random_lemari:
+            give_lemari()
+            count_lemari +=1
+        
+
         if count_chair < random_chair :
             give_chair()
             count_chair += 1
@@ -213,10 +218,6 @@ def randomnize(draw_max,count_bed,count_chair,count_table,count_lemari,size_X,si
         if count_table < random_table:
             give_table()
             count_table +=1
-
-        if count_lemari < random_lemari:
-            give_lemari()
-            count_lemari +=1
         
         draw_max +=1
     print("(3) =",count_bed,"(2) =",count_chair,"(4) =",count_table,"(5) =",count_lemari )
@@ -564,9 +565,7 @@ while running:
                         map[int((Mouse_y - y_block)//tile_size)][int((Mouse_x - x_block)//tile_size)] = 0                                                      #
             ##############################################################################################################################
         if event.type == pygame.MOUSEBUTTONDOWN:
-            #Random_tool
 
-            #Bed_Tools
             if bed_button_w <= mouse[0] <= bed_button_w + tool_size and bed_button_y <= mouse[1] <= bed_button_y + tool_size and tools_clicked != "BED":
                 clear_select()
                 selected_tool[0][0] = 1

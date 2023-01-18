@@ -100,11 +100,11 @@ class Room :
         while (babi):
             i = random.randint(1,self.size_Y - 2)
             j = random.randint(1,self.size_X - 2)
-            # while j in self.dynamic_memory_j:
-            #     j = random.randint(1,self.size_X - 2)
+            while j in self.dynamic_memory_j:
+                j = random.randint(1,self.size_X - 2)
 
-            # while i in self.dynamic_memory_i:
-            #     i = random.randint(1,self.size_Y - 2)
+            while i in self.dynamic_memory_i:
+                i = random.randint(1,self.size_Y - 2)
             print("MENGOCOK TEMPAT",ea)
             if kode == 3 or kode == 5:
                 j,i = random.choice(yes),random.randint(1,self.size_Y - 2)
@@ -160,13 +160,7 @@ class Room :
                                 # print("this is the counted = ",j + a*atas_bawah)
                                 for z in range (0,panjang) :
 
-                                    if ((self.maps[j + a*atas_bawah][i + z*kiri_kanan] != 0 and self.maps[j + a*atas_bawah][i + z*kiri_kanan] != kode) 
-                                        # or self.maps[j + a * atas_bawah][i + (z + 1) * kiri_kanan] == 1 
-                                        # or self.maps[j + (a + 1) *atas_bawah][i + z * kiri_kanan] == 1
-                                        # or (self.maps[j - 1][i + z * kiri_kanan] == 1)
-                                        # or self.maps[j + 1][i + z * kiri_kanan] == 1 
-                                        # or self.maps[j + a * atas_bawah][i + 1] == 1
-                                        # or self.maps[j + a * atas_bawah][i - 1] == 1 ):
+                                    if ((self.maps[j + a*atas_bawah][i + z*kiri_kanan] != 0 and self.maps[j + a*atas_bawah][i + z*kiri_kanan] != kode)
 
                                         or self.maps[j + a * atas_bawah][i + (z + 1) * kiri_kanan] != 0 and self.maps[j + a * atas_bawah][i + (z + 1) * kiri_kanan] != 8 
                                         or self.maps[j + (a + 1) *atas_bawah][i + z * kiri_kanan] != 0 and self.maps[j + (a + 1) *atas_bawah][i + z * kiri_kanan] != 8
@@ -185,8 +179,8 @@ class Room :
                                                 self.maps[j + a*atas_bawah][i + z*kiri_kanan] = kode
                                                 # print()
                                                 # print ("After=",self.maps[j+a*atas_bawah][i+z*kiri_kanan])
-                                    # self.dynamic_memory_j.append(j)
-                                    # self.dynamic_memory_i.append(i)
+                                    self.dynamic_memory_j.append(j)
+                                    self.dynamic_memory_i.append(i)
                                     print(self.dynamic_memory_j,self.dynamic_memory_i)
                                     anjing = False
                         else :

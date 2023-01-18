@@ -4,6 +4,7 @@ class lemari :
     _length_x = 0
     _length_y = 0
     
+    pojok = False
     max_x = 4
     max_y = 2
 
@@ -21,9 +22,6 @@ class lemari :
 
         if (self._length_y > 2):
             self._length_y = random.randint(self.min_y, self.max_y)
-        
-        # self._length_x = 2 #tester
-        # self._length_y = 2 #tester
 
     def give_table(self):
         print(self._length_x,"aaaa", self._length_y)
